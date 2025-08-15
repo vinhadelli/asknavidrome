@@ -751,6 +751,7 @@ class PlaybackFinishedHandler(AbstractRequestHandler):
 
     def handle(self, handler_input: HandlerInput) -> Response:
         logger.debug('In PlaybackFinishedHandler')
+        connection.conn.scrobble(play_queue.current_track.id,submission=True, listenTime=int(time.time()))
         play_queue.get_next_track()
 
         return handler_input.response_builder.response
